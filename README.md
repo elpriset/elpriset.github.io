@@ -2,40 +2,49 @@
 
 A real-time electricity price tracking Progressive Web Application (PWA) that displays hourly electricity prices for different regions in Sweden. The application shows current and upcoming prices, price statistics, and visual representations of price trends.
 
-![Electricity Price Tracker](screenshots/app-preview.png)
+![Electricity Price Tracker - Light Theme](screenshots/app-light.png)
+![Electricity Price Tracker - Dark Theme](screenshots/app-dark.png)
 
 ## Features
 
 - 🕒 Real-time price updates
 - 📊 Visual price representation with interactive charts
 - 📱 Progressive Web App (PWA) - installable on mobile devices
-- 🌙 Smooth midnight transition handling
+- 🌙 Dark/Light theme support with system preference detection
+- 🎯 Smart theme persistence across sessions
+- 🌑 Smooth midnight transition handling
 - 📈 Price statistics (lowest, average, highest)
-- 🎨 Color-coded price indicators
-- 🔄 Automatic data caching for improved performance
+- 🎨 Color-coded price indicators with theme-aware colors
+- 🔄 Advanced data caching with fallback mechanisms
 - 🌐 Multiple region support (SE1, SE2, SE3, SE4)
-- 📶 Offline capability
+- 📶 Offline capability with service worker
 - 🔍 8-hour price forecast display
+- 🔒 Secure data handling and CORS support
+- 📱 Responsive design for all devices
+- ⚡ Optimized performance with minimal DOM updates
 
 ## Installation
 
 ### As a Web Application
 
-1. Visit the application URL in your web browser
+1. Visit [https://elpriset.github.io](https://elpriset.github.io) in your web browser
 2. The application will work immediately in your browser
+3. The app automatically adapts to your system's theme preference
 
 ### As a PWA (Mobile/Desktop)
 
 1. Visit the application URL in a supported browser (Chrome, Edge, Safari)
-2. Click the "Install" button when prompted
+2. Click the "Install" button in the top right corner
 3. The app will install and create an icon on your device
+4. Enjoy native app-like experience with offline support
 
 ## Usage
 
 1. Select your region from the dropdown menu (SE1-SE4)
 2. View current electricity prices and upcoming 8-hour forecast
-3. Check price statistics at the bottom of the page
-4. Prices are color-coded:
+3. Toggle between light and dark themes using the theme button
+4. Check price statistics at the bottom of the page
+5. Prices are color-coded (theme-aware):
    - 🟢 Green: Low price
    - 🟡 Yellow: Medium price
    - 🔴 Red: High price
@@ -44,23 +53,40 @@ A real-time electricity price tracking Progressive Web Application (PWA) that di
 
 ### API Integration
 
-The application uses the elprisetjustnu.se API:
-- Base URL: `https://elprisetjustnu.se/api/v1/prices`
+The application uses the elprisetjustnu.se API with multiple fallback proxies:
+- Primary API: `https://elprisetjustnu.se/api/v1/prices`
 - Endpoint format: `/{YYYY}/{MM-DD}_SE{N}.json`
+- Fallback CORS proxies for reliability
 
 ### Data Handling
 
-- Automatic data caching with 1-hour invalidation
+- Multi-layer caching strategy:
+  - Browser cache
+  - Service Worker cache
+  - Application state cache
+- Smart cache invalidation (1-hour TTL)
 - Concurrent fetching of today's and tomorrow's prices
-- Robust error handling and fallback mechanisms
+- Robust error handling with graceful degradation
+
+### Theme Management
+
+- System theme preference detection
+- Theme persistence across:
+  - LocalStorage
+  - Cookies
+  - Service Worker cache
+- Smooth theme transitions
+- Theme-aware UI components and charts
 
 ### Performance Optimizations
 
 - Efficient price data caching
 - Memoized price category calculations
-- Preloading of next hour's data
-- Optimized chart rendering
+- Smart preloading of next hour's data
+- Optimized chart rendering with theme support
 - Minimal DOM updates
+- Responsive image loading
+- Service Worker for offline support
 
 ## Browser Support
 
@@ -69,6 +95,7 @@ The application uses the elprisetjustnu.se API:
 - Safari (latest)
 - Edge (latest)
 - Mobile browsers (iOS Safari, Android Chrome)
+- PWA support for installable experience
 
 ## Contributing
 
@@ -80,7 +107,8 @@ The application uses the elprisetjustnu.se API:
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details. 
+For third-party attributions, see the [NOTICE](NOTICE) file.
 
 ## Acknowledgments
 
@@ -95,10 +123,11 @@ For support, please open an issue in the GitHub repository or contact the mainta
 ## Security
 
 This application implements several security measures:
-- CORS handling
-- API fallback mechanisms
-- Secure data caching
-- Input validation
-- Error handling
+- CORS handling with multiple fallback proxies
+- Secure theme and region preference storage
+- Multi-layer data caching with validation
+- Input sanitization and validation
+- Comprehensive error handling
+- Secure API integration
 
 For security concerns or vulnerability reports, please contact the maintainers directly. 
